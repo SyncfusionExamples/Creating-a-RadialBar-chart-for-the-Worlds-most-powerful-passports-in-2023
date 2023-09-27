@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RadialbarSample.MainPage"
+             xmlns:chart="clr-namespace:Syncfusion.Maui.Charts;assembly=Syncfusion.Maui.Charts"
+             xmlns:local="clr-namespace:RadialbarSample">
+    <ContentPage.BindingContext>
+        <local:PowerfulPassportViewModel></local:PowerfulPassportViewModel>
+    </ContentPage.BindingContext>
+    <chart:SfCircularChart Title="The World's Most and Least Powerful Passport in 2023">
+        <chart:SfCircularChart.Resources>
+            <DataTemplate x:Key="tooltipTemplate">
+                <StackLayout>
+                    <HorizontalStackLayout>
+                        <Image Source="{Binding Item.FlagSymbol}" WidthRequest="30" HeightRequest="25"></Image>
+                        <Label Text="{Binding Item.Country}" TextColor="White"></Label>
+                    </HorizontalStackLayout>
+                    <BoxView HeightRequest="1" Color="Gray"></BoxView>
+                    <Label Text="{Binding Item.Access,StringFormat= 'Free Access : {0}'}" TextColor="White"></Label>
+                </StackLayout>
+            </DataTemplate>
+        </chart:SfCircularChart.Resources>
+        <chart:SfCircularChart.Legend>
+            <chart:ChartLegend Placement="Top">
+            </chart:ChartLegend>
+        </chart:SfCircularChart.Legend>
+
+        <chart:RadialBarSeries x:Name="series"
+                               ItemsSource="{Binding MostData}"
+                               XBindingPath="Country"
+                               YBindingPath="Access"
+                               MaximumValue="200"
+                               InnerRadius="0.4"
+                               GapRatio="0.3"
+                               EnableTooltip="True"
+                               TooltipTemplate="{StaticResource tooltipTemplate}"
+                               Radius="1"
+                               PaletteBrushes="{Binding CustomBrushes}"
+                               LegendIcon="SeriesType"
+                               >
+            <chart:RadialBarSeries.CenterView>
+                <VerticalStackLayout>
+                    <chart:SfCircularChart>
+                        <chart:SfCircularChart.BindingContext>
+                            <local:PowerfulPassportViewModel></local:PowerfulPassportViewModel>
+                        </chart:SfCircularChart.BindingContext>
+                        <chart:RadialBarSeries ItemsSource="{Binding LeastData}"
+                                           XBindingPath="Country"
+                                           YBindingPath="Access"
+                                           MaximumValue="150"
+                                           GapRatio="0.1"
+                                           InnerRadius="0.2"
+                                           Radius="0.85"
+                                           PaletteBrushes="{Binding CustomBrushes1}"
+                                           LegendIcon="SeriesType"
+                                           EnableTooltip="True"
+                                           TooltipTemplate="{StaticResource tooltipTemplate}"></chart:RadialBarSeries>
+                </chart:SfCircularChart>
+                </VerticalStackLayout>
+            </chart:RadialBarSeries.CenterView>
+            <chart:RadialBarSeries.SelectionBehavior>
+                <chart:DataPointSelectionBehavior SelectedIndex="1" ></chart:DataPointSelectionBehavior>
+            </chart:RadialBarSeries.SelectionBehavior>
+        </chart:RadialBarSeries>
+    </chart:SfCircularChart>
+
+</ContentPage>
