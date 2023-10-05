@@ -4,39 +4,42 @@ namespace RadialbarSample;
 
 public partial class MainPage : ContentPage
 {
-
+   // PowerfulPassportViewModel viewModel = new PowerfulPassportViewModel();
 	public MainPage()
 	{
 		InitializeComponent();
 	}
 
-    private void DataPointSelectionBehavior_SelectionChanged(object sender, Syncfusion.Maui.Charts.ChartSelectionChangedEventArgs e)
+
+    private void Picker_SelectedIndexChanged(object sender, EventArgs e)
     {
-        var series = sender as RadialBarSeries;
-
-        if (series != null)
+        var picker = sender as Picker;
+        string selectedRegion = picker.SelectedIndex switch
         {
-            int selectedIndex = series.SelectionBehavior.SelectedIndex;
+            0 => "Asia's",
+            1 => "Europe's",
+            _ => "World's"
+        };
 
-            if (selectedIndex < new PowerfulPassportViewModel().MostData.Count)
-            {
-                string selectedCountry = new PowerfulPassportViewModel().MostData[selectedIndex].Country;
-                double freeAccess = new PowerfulPassportViewModel().MostData[selectedIndex].Access;
-                StackLayout layout = new StackLayout();
+        label.Text = selectedRegion;
+        label1.Text = selectedRegion;
 
-                var label = new Label { Text = "Free Access", TextColor = Colors.Black, HorizontalOptions = LayoutOptions.Center, VerticalOptions = LayoutOptions.Fill,Margin=new Thickness(0,20,0,0),FontAttributes= FontAttributes.Bold}; 
-                var label1 = new Label { Text = "Permitted by", Margin=new Thickness(10,0,0,0), FontAttributes = FontAttributes.Bold };
-                var label2 = new Label { Text = selectedCountry + " : " + freeAccess,Margin= new Thickness(10, 0, 0, 0), FontAttributes = FontAttributes.Bold };
-                layout.SetBinding(HeightRequestProperty, nameof(RadialBarSeries.CenterHoleSize));
-                layout.SetBinding(WidthRequestProperty, nameof(RadialBarSeries.CenterHoleSize));
-                layout.Background = Colors.White;
-                layout.Children.Add(label);
-                layout.Children.Add(label1);
-                layout.Children.Add(label2);
-                series.CenterView = layout;
-            }
-        }
+        var mostData = picker.SelectedIndex switch
+        {
+            0 => viewModel.AsianMostData,
+            1 => viewModel.EuropeanMostData,
+            _ => viewModel.WorldMostData
+        };
+
+        var leastData = picker.SelectedIndex switch
+        {
+            0 => viewModel.AsianLeastData,
+            1 => viewModel.EuropeanLeastData,
+            _ => viewModel.WorldLeastData
+        };
+
+        series.ItemsSource = mostData;
+        series1.ItemsSource = leastData;
     }
-
 }
 

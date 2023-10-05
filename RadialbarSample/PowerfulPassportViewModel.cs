@@ -2,74 +2,96 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace RadialbarSample
 {
-    internal class PowerfulPassportViewModel
-    {        
-        public ObservableCollection<PowerfulPassportModel> MostData { get; set; }
-        public ObservableCollection<PowerfulPassportModel> LeastData { get; set; }
-        public List<Brush> CustomBrushes { get; set; }
-        public List<Brush> CustomBrushes1 { get; set; }
+    public  class PowerfulPassportViewModel
+    {
+        
+        public string[] Region => new string[] { "Asia", "Europe", "World" };
+        public ObservableCollection<PowerfulPassportModel> WorldMostData { get; set; } = new ObservableCollection<PowerfulPassportModel>();
+        public ObservableCollection<PowerfulPassportModel> AsianMostData { get; set; } = new ObservableCollection<PowerfulPassportModel>();
+        public ObservableCollection<PowerfulPassportModel> EuropeanMostData { get; set; } = new ObservableCollection<PowerfulPassportModel>();
+        public ObservableCollection<PowerfulPassportModel> WorldLeastData { get; set; } = new ObservableCollection<PowerfulPassportModel>();
+        public ObservableCollection<PowerfulPassportModel> AsianLeastData { get; set; } = new ObservableCollection<PowerfulPassportModel>();
+        public ObservableCollection<PowerfulPassportModel> EuropeanLeastData { get; set; } = new ObservableCollection<PowerfulPassportModel>();
+        public List<Brush> CustomBrushes { get; set; } = new List<Brush>();
+        public List<Brush> CustomBrushes1 { get; set; } = new List<Brush>();
 
         public PowerfulPassportViewModel()
         {
-            MostData = new ObservableCollection<PowerfulPassportModel>();
-            MostData.Add(new PowerfulPassportModel() { Country = "Japan", Access = 193, FlagSymbol = "uae.png" });
-            MostData.Add(new PowerfulPassportModel() { Country = "Singapore", Access = 193 ,FlagSymbol="colombia.png"});
-            MostData.Add(new PowerfulPassportModel() { Country = "South Korea", Access = 192,FlagSymbol="ukraine.png" });
-            MostData.Add(new PowerfulPassportModel() { Country = "Germany", Access = 191, FlagSymbol= "moldova.png" });
-            MostData.Add(new PowerfulPassportModel() { Country = "Spain", Access = 191,FlagSymbol= "vincent.png" });
-            MostData.Add(new PowerfulPassportModel() { Country = "Finland", Access = 190, FlagSymbol = "dominica.png" });
-            MostData.Add(new PowerfulPassportModel() { Country = "Italy", Access = 190, FlagSymbol= "greneda.png" });
-            MostData.Add(new PowerfulPassportModel() { Country = "Luxembourg", Access = 190 ,FlagSymbol= "peru.png" });
-            MostData.Add(new PowerfulPassportModel() { Country = "Austria", Access = 189 ,FlagSymbol= "geogeria.png" });
-            MostData.Add(new PowerfulPassportModel() { Country = "Denmark", Access = 189,FlagSymbol= "lucia.png" });
+            // Populate WorldMostData
+            PopulateData(WorldMostData, new[]
+            {
+                ("Japan", 190),("Austria", 189),("Belgium",188),("Canada",187),("Greece",186)
+            }); 
 
-            LeastData = new ObservableCollection<PowerfulPassportModel>();
-            LeastData.Add(new PowerfulPassportModel() { Country = "Eritrea", Access = 44 });
-            LeastData.Add(new PowerfulPassportModel() { Country = "Iran", Access = 44 });
-            LeastData.Add(new PowerfulPassportModel() { Country = "S.Sudan", Access = 44 });
-            LeastData.Add(new PowerfulPassportModel() { Country = "DRC", Access = 42 });
-            LeastData.Add(new PowerfulPassportModel() { Country = "Sudan", Access = 42 });
-            LeastData.Add(new PowerfulPassportModel() { Country = "Kosovo", Access = 41 });
-            LeastData.Add(new PowerfulPassportModel() { Country = "Lebanon", Access = 41 });
-            LeastData.Add(new PowerfulPassportModel() { Country = "Sri Lanka", Access = 41 });
-            LeastData.Add(new PowerfulPassportModel() { Country = "Bangaladesh", Access = 40 });
+            // Populate AsianMostData
+            PopulateData(AsianMostData, new[]
+            {
+                ("Singapore", 193), ("Malaysia", 181), ("UAE", 179),
+                ("Hong Kong", 167), ("Israel", 159)
+            });
 
+            // Populate EuropeanMostData
+            PopulateData(EuropeanMostData, new[]
+            {
+                ("Finland", 190), ("Austria", 189), ("Denmark", 189),
+                ("Bulgaria", 176), ("Norway", 188)
+            });
+
+            // Populate WorldLeastData
+            PopulateData(WorldLeastData, new[]
+            {
+                ("Iran", 43), ("Libya", 40), ("Sudan", 44),
+                ("Yemen", 34), ("Somalia", 35)
+            });
+
+            // Populate AsianLeastData
+            PopulateData(AsianLeastData, new[]
+            {
+                ("Afghanistan", 27), ("Syria", 28), ("Iraq", 29),
+                ("Pakistan", 33), ("Nepal", 39)
+            });
+
+            // Populate EuropeanLeastData
+            PopulateData(EuropeanLeastData, new[]
+            {
+                ("Belarus", 79), ("Albania", 119), ("Montenegro", 124),
+                ("Moldova", 121), ("Kosovo", 40)
+            });
+
+            // Populate CustomBrushes
             CustomBrushes = new List<Brush>
             {
-               Color.FromRgb(36, 47, 155),    
-               Color.FromRgb(8, 131, 149),
-               Color.FromRgb(199, 0, 57),
-               Color.FromRgb(255, 0, 96),
-               Color.FromRgb(248, 111, 3),
-               Color.FromRgb(85, 122, 70),
-               Color.FromRgb(39, 158, 255),
-               Color.FromRgb(123, 40, 105),
-               Color.FromRgb(236, 83, 176),
-               Color.FromRgb(46, 67, 116),
-
+                new SolidColorBrush(Color.FromArgb("#F6991E")),
+                new SolidColorBrush(Color.FromArgb("#439772")),
+                new SolidColorBrush(Color.FromArgb("#A4382D")),
+                new SolidColorBrush(Color.FromArgb("#2A78F4")),
+                new SolidColorBrush(Color.FromArgb("#D82591")),
             };
 
+            // Populate CustomBrushes1
             CustomBrushes1 = new List<Brush>
             {
-                Color.FromRgb(0, 153, 102),
-                Color.FromRgb(249, 76, 16),
-                Color.FromRgb(102, 0, 204),
-                Color.FromRgb(220, 20, 60),
-                Color.FromRgb(255, 215, 0),
-                Color.FromRgb(0, 128, 128),
-                Color.FromRgb(48, 133, 195),
-                Color.FromRgb(34, 139, 34),
-                Color.FromRgb(255, 105, 180),
+                new SolidColorBrush(Color.FromArgb("#70ad47")),
+                new SolidColorBrush(Color.FromArgb("#dd8abd")),
+                new SolidColorBrush(Color.FromArgb("#7f84e8")),
+                new SolidColorBrush(Color.FromArgb("#7bb4eb")),
+                new SolidColorBrush(Color.FromArgb("#ea7a57"))
             };
         }
-        
 
-        
+        private void PopulateData(ObservableCollection<PowerfulPassportModel> collection, IEnumerable<(string Country, int Access)> data)
+        {
+            foreach (var (country, access) in data)
+            {
+                collection.Add(new PowerfulPassportModel { Country = country, Access = access });
+            }
+        }
     }
 }
