@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:RadialbarSample"
              >
     <ContentPage.BindingContext>
-        <local:PowerfulPassportViewModel x:Name="viewModel"></local:PowerfulPassportViewModel>
+        <local:PassportViewModel x:Name="viewModel"></local:PassportViewModel>
     </ContentPage.BindingContext>
     <ContentPage.Resources>
         <ResourceDictionary>
