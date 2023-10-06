@@ -4,35 +4,42 @@
              x:Class="RadialbarSample.MainPage"
              xmlns:chart="clr-namespace:Syncfusion.Maui.Charts;assembly=Syncfusion.Maui.Charts"
              xmlns:local="clr-namespace:RadialbarSample"
+             
              >
     <ContentPage.BindingContext>
         <local:PassportViewModel x:Name="viewModel"></local:PassportViewModel>
     </ContentPage.BindingContext>
     <ContentPage.Resources>
         <ResourceDictionary>
+            <Style TargetType="Label" x:Key="style">
+                <Setter Property="TextColor" Value="White"></Setter>
+                <Setter Property="FontAttributes" Value="Bold"></Setter>
+            </Style>
             <DataTemplate x:Key="tooltipTemplate">
                 <StackLayout>
                     <HorizontalStackLayout>
-                        <Label Text="{Binding Item.Country}" TextColor="White" Margin="25,0,0,0"></Label>
+                        <Label Text="{Binding Item.Country}" Style="{StaticResource style}" Margin="25,0,0,0"></Label>
                     </HorizontalStackLayout>
                     <BoxView HeightRequest="1" Color="Gray"></BoxView>
-                    <Label Text="{Binding Item.Access, StringFormat='Free Access : {0}'}" TextColor="White"></Label>
+                    <Label Text="{Binding Item.Access, StringFormat='Free Access : {0}'}" Style="{StaticResource style}"></Label>
                 </StackLayout>
             </DataTemplate>
         </ResourceDictionary>
     </ContentPage.Resources>
-    <Grid RowDefinitions="{OnPlatform Android='1.5*,4*,4*',iOS='1.5*,4*,4*',Default='1.5*,8.5*'}" ColumnDefinitions="{OnPlatform Android='*',iOS='*',Default='5*,5*'}">
-        <Label Text="The Most and Least Powerful Passport in 2023" FontSize="Medium" Margin="0,20,0,0" Grid.Row="0" Grid.ColumnSpan="2" HorizontalTextAlignment="Center"></Label>
-        <Label Text="Select region :" Grid.Row="0" Grid.Column="1" VerticalOptions="End" HorizontalOptions="Center" Margin="{OnPlatform Android='30,-10,0,10',Default='0,-10,20,10'}" FontSize="16"></Label>
-        <Picker Grid.Row="0" Grid.Column="1" Margin="{OnPlatform Android='0,55,60,0',iOS='0,55,60,0',Default='0,50,180,0'}" VerticalOptions="End" HorizontalOptions="End"
+    <Border Stroke="brown" StrokeThickness="5" StrokeShape="RoundRectangle 10" Margin="{OnPlatform Android=1,iOS=1,Default=10}">
+    <Grid BackgroundColor="Black" RowDefinitions="1.7*,8.3*" ColumnDefinitions="5*,5*">
+            <Label Text="The Most and Least Powerful Passport in 2023" Style="{StaticResource style}" FontSize="Medium" Margin="0,20,0,0" Grid.Row="0" Grid.ColumnSpan="2" HorizontalTextAlignment="Center"></Label>
+            <Label Text="Select region :"  Style="{StaticResource style}" Grid.Row="0" Grid.Column="1" VerticalOptions="End" HorizontalOptions="Center" Margin="{OnPlatform Android='20,40,0,0',MacCatalyst='170,55,0,0',Default='0,-10,20,10'}" FontSize="16"></Label>
+        <Picker Grid.Row="0" Grid.Column="1" Margin="{OnPlatform Android='0,45,60,0',iOS='0,55,60,0',Default='0,50,165,0'}" VerticalOptions="End" HorizontalOptions="{OnPlatform MacCatalyst=Center,Default=End}"
                 ItemsSource="{Binding Source={x:Reference viewModel},Path=Region}"
                  SelectedItem="{Binding Source={x:Reference viewModel},Path=Region[0]}"
                  SelectedIndex="0"
-                 SelectedIndexChanged="Picker_SelectedIndexChanged">
+                 SelectedIndexChanged="Picker_SelectedIndexChanged"
+                 Background="white" TextColor="Black">
         </Picker>
         <chart:SfCircularChart Grid.Row="1" Grid.Column="0">
             <chart:SfCircularChart.Legend>
-                    <chart:ChartLegend Placement="{OnPlatform Android='Top',Default='Right'}">
+                    <chart:ChartLegend Placement="Right">
                     </chart:ChartLegend>
                 </chart:SfCircularChart.Legend>
 
@@ -48,20 +55,21 @@
                            LegendIcon="Circle"   
                            CapStyle="EndCurve"
                            TooltipTemplate="{StaticResource tooltipTemplate}"
-                           PaletteBrushes="{Binding CustomBrushes}">
+                           PaletteBrushes="{Binding CustomBrushes}"
+                           TrackFill="white">
                 <chart:RadialBarSeries.CenterView>
                     <VerticalStackLayout>
-                        <Label Text="Asia's" FontSize="{OnPlatform Android='10',iOS='10',Default=20}" FontAttributes="Bold" x:Name="label"></Label>
-                        <Label Text="Most" FontSize="{OnPlatform  Android='10',iOS='10',Default=20}" FontAttributes="Bold"/>
-                        <Label Text="powerful" FontSize="{OnPlatform  Android='10',iOS='10',Default=20}" FontAttributes="Bold"/>
-                        <Label Text="passport" FontSize="{OnPlatform  Android='10',iOS='10',Default=20}" FontAttributes="Bold"/>
+                            <Label Text="Asia's" FontSize="{OnPlatform Android='10',iOS='10',Default=20}" Style="{StaticResource style}" x:Name="label"></Label>
+                            <Label Text="Most" FontSize="{OnPlatform  Android='10',iOS='10',Default=20}" Style="{StaticResource style}"/>
+                            <Label Text="powerful" FontSize="{OnPlatform  Android='10',iOS='10',Default=20}" Style="{StaticResource style}"/>
+                            <Label Text="passport" FontSize="{OnPlatform  Android='10',iOS='10',Default=20}" Style="{StaticResource style}"/>
                     </VerticalStackLayout>
                 </chart:RadialBarSeries.CenterView>
             </chart:RadialBarSeries>
         </chart:SfCircularChart>
-        <chart:SfCircularChart Grid.Row="{OnPlatform Android='2',iOS='2',Default='1'}" Grid.Column="{OnPlatform Android='0',iOS='0',Default='1'}">
-            <chart:SfCircularChart.Legend>
-                    <chart:ChartLegend Placement="{OnPlatform Android='Top',Default='Right'}">
+            <chart:SfCircularChart Grid.Row="1" Grid.Column="1">
+                <chart:SfCircularChart.Legend>
+                    <chart:ChartLegend Placement="Right">
                     </chart:ChartLegend>
                 </chart:SfCircularChart.Legend>
                 <chart:RadialBarSeries x:Name="series1" 
@@ -76,18 +84,18 @@
                CapStyle="EndCurve"
                TooltipTemplate="{StaticResource tooltipTemplate}"
                PaletteBrushes="{Binding CustomBrushes1}"
+               TrackFill="white"                       
               >
-                <chart:RadialBarSeries.CenterView>
-                    <VerticalStackLayout>
-                        <Label Text="Asia's" FontSize="{OnPlatform Android='10',iOS='10',Default=20}" FontAttributes="Bold" x:Name="label1"></Label>
-                        <Label Text="Least" FontSize="{OnPlatform Android='10',iOS='10',Default=20}" FontAttributes="Bold"/>
-                        <Label Text="powerful" FontSize="{OnPlatform Android='10',iOS='10',Default=20}" FontAttributes="Bold"/>
-                        <Label Text="passport" FontSize="{OnPlatform Android='10',iOS='10',Default=20}" FontAttributes="Bold"/>
-                    </VerticalStackLayout>
-                </chart:RadialBarSeries.CenterView>
-            </chart:RadialBarSeries>
-        </chart:SfCircularChart>
-        
-        
-    </Grid>
+                    <chart:RadialBarSeries.CenterView>
+                        <VerticalStackLayout>
+                            <Label Text="Asia's" Style="{StaticResource style}" FontSize="{OnPlatform Android=10,iOS='10',Default=20}" x:Name="label1"></Label>
+                            <Label Text="Least" Style="{StaticResource style}" FontSize="{OnPlatform Android='10',iOS='10',Default=20}"/>
+                            <Label Text="powerful" Style="{StaticResource style}" FontSize="{OnPlatform Android='10',iOS='10',Default=20}"/>
+                            <Label Text="passport" Style="{StaticResource style}" FontSize="{OnPlatform Android='10',iOS='10',Default=20}"/>
+                        </VerticalStackLayout>
+                    </chart:RadialBarSeries.CenterView>
+                </chart:RadialBarSeries>
+            </chart:SfCircularChart>
+        </Grid>
+    </Border>
 </ContentPage>
