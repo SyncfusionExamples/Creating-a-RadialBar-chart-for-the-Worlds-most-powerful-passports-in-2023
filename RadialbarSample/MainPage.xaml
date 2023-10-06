@@ -25,10 +25,11 @@
         </ResourceDictionary>
     </ContentPage.Resources>
     <Border Stroke="gray" StrokeThickness="5" StrokeShape="RoundRectangle 10" Margin="{OnPlatform Android=1,iOS=1,Default=10}">
-    <Grid RowDefinitions="1.7*,8.3*" ColumnDefinitions="5*,5*">
+    <Grid RowDefinitions="2*,8*" ColumnDefinitions="5*,5*">
             <Label Text="The Most and Least Powerful Passport in 2023"  FontSize="Medium" Margin="0,20,0,0" Grid.Row="0" Grid.ColumnSpan="2" HorizontalTextAlignment="Center"></Label>
-            <Label Text="Select region :"  Grid.Row="0" Grid.Column="1" VerticalOptions="End" HorizontalOptions="Center" Margin="{OnPlatform Android='20,40,0,0',MacCatalyst='170,55,0,0',Default='0,-10,20,10'}" FontSize="16"></Label>
-        <Picker Grid.Row="0" Grid.Column="1" Margin="{OnPlatform Android='0,45,60,0',iOS='0,55,60,0',Default='0,50,165,0'}" VerticalOptions="End" HorizontalOptions="{OnPlatform MacCatalyst=Center,Default=End}"
+            <Label Text="Select region :"  Grid.Row="0" Grid.Column="1" VerticalOptions="End" HorizontalOptions="Center" 
+                   Margin="{OnPlatform Android='20,40,0,0',MacCatalyst='220,45,0,10',Default='0,-10,20,10'}" FontSize="16"></Label>
+        <Picker Grid.Row="0" Grid.Column="1" Margin="{OnPlatform Android='0,50,60,0',iOS='0,55,60,0',Default='0,50,165,0'}" VerticalOptions="End" HorizontalOptions="End"
                 ItemsSource="{Binding Source={x:Reference viewModel},Path=Region}"
                  SelectedItem="{Binding Source={x:Reference viewModel},Path=Region[0]}"
                  SelectedIndex="0"
@@ -37,7 +38,7 @@
         </Picker>
         <chart:SfCircularChart Grid.Row="1" Grid.Column="0">
             <chart:SfCircularChart.Legend>
-                    <chart:ChartLegend Placement="Right">
+                    <chart:ChartLegend Placement="{OnPlatform MacCatalyst='Right',Default='Right'}">
                     </chart:ChartLegend>
                 </chart:SfCircularChart.Legend>
 
@@ -67,7 +68,7 @@
         </chart:SfCircularChart>
             <chart:SfCircularChart Grid.Row="1" Grid.Column="1">
                 <chart:SfCircularChart.Legend>
-                    <chart:ChartLegend Placement="Right">
+                    <chart:ChartLegend Placement="{OnPlatform MacCatalyst='Right',Default='Right'}">
                     </chart:ChartLegend>
                 </chart:SfCircularChart.Legend>
                 <chart:RadialBarSeries x:Name="series1" 
