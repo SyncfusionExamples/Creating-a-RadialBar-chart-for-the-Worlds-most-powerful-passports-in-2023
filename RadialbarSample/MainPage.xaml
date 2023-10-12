@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RadialbarSample.MainPage"
+             xmlns:chart="clr-namespace:Syncfusion.Maui.Charts;assembly=Syncfusion.Maui.Charts"
+             xmlns:local="clr-namespace:RadialbarSample"             
+             >
+    <ContentPage.BindingContext>
+        <local:PassportViewModel x:Name="viewModel"></local:PassportViewModel>
+    </ContentPage.BindingContext>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Label" x:Key="style">
+                <Setter Property="FontAttributes" Value="Bold"></Setter>
+            </Style>
+            <DataTemplate x:Key="tooltipTemplate">
+                <StackLayout>
+                    <HorizontalStackLayout>
+                        <Label Text="{Binding Item.Country}" TextColor="white" Margin="25,0,0,0"></Label>
+                    </HorizontalStackLayout>
+                    <BoxView HeightRequest="1" Color="Gray"></BoxView>
+                    <Label Text="{Binding Item.Access, StringFormat='Free Access : {0}'}" TextColor="white"></Label>
+                </StackLayout>
+            </DataTemplate>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <Border Stroke="gray" StrokeThickness="5" StrokeShape="RoundRectangle 10" Margin="{OnPlatform Android=1,iOS=1,Default=10}">
+    <Grid RowDefinitions="2*,8*" ColumnDefinitions="5*,5*">
+            <Label Text="The Most and Least Powerful Passport in 2023"  FontSize="Medium" Margin="0,20,0,0" Grid.Row="0" Grid.ColumnSpan="2" HorizontalTextAlignment="Center"></Label>
+            <Label Text="Select region :"  Grid.Row="0" Grid.Column="1" VerticalOptions="End" HorizontalOptions="Center" 
+                   Margin="{OnPlatform Android='20,40,0,0',MacCatalyst='220,45,0,10',Default='0,-10,20,10'}" FontSize="16"></Label>
+        <Picker Grid.Row="0" Grid.Column="1" Margin="{OnPlatform Android='0,50,60,0',iOS='0,55,60,0',Default='0,50,165,0'}" VerticalOptions="End" HorizontalOptions="End"
+                ItemsSource="{Binding Source={x:Reference viewModel},Path=Region}"
+                 SelectedItem="{Binding Source={x:Reference viewModel},Path=Region[0]}"
+                 SelectedIndex="0"
+                 SelectedIndexChanged="Picker_SelectedIndexChanged"                
+                 >
+        </Picker>
+        <chart:SfCircularChart Grid.Row="1" Grid.Column="0">
+            <chart:SfCircularChart.Legend>
+                    <chart:ChartLegend Placement="{OnPlatform MacCatalyst='Right',Default='Right'}">
+                    </chart:ChartLegend>
+                </chart:SfCircularChart.Legend>
+
+            <chart:RadialBarSeries x:Name="series" 
+                           ItemsSource="{Binding AsianMostData}"   
+                           XBindingPath="Country"
+                           YBindingPath="Access"                                 
+                           InnerRadius="0.3"
+                           GapRatio="0.3"
+                           Radius="1"
+                           MaximumValue="220"
+                           EnableTooltip="True"
+                           LegendIcon="Circle"   
+                           CapStyle="EndCurve"
+                           TooltipTemplate="{StaticResource tooltipTemplate}"
+                           PaletteBrushes="{Binding CustomBrushes}"
+                           >
+                <chart:RadialBarSeries.CenterView>
+                    <VerticalStackLayout>
+                            <Label Text="Asia's" FontSize="{OnPlatform Android='10',iOS='10',Default=20}" Style="{StaticResource style}" x:Name="label"></Label>
+                            <Label Text="Most" FontSize="{OnPlatform  Android='10',iOS='10',Default=20}" Style="{StaticResource style}"/>
+                            <Label Text="powerful" FontSize="{OnPlatform  Android='10',iOS='10',Default=20}" Style="{StaticResource style}"/>
+                            <Label Text="passport" FontSize="{OnPlatform  Android='10',iOS='10',Default=20}" Style="{StaticResource style}"/>
+                    </VerticalStackLayout>
+                </chart:RadialBarSeries.CenterView>
+            </chart:RadialBarSeries>
+        </chart:SfCircularChart>
+            <chart:SfCircularChart Grid.Row="1" Grid.Column="1">
+                <chart:SfCircularChart.Legend>
+                    <chart:ChartLegend Placement="{OnPlatform MacCatalyst='Right',Default='Right'}">
+                    </chart:ChartLegend>
+                </chart:SfCircularChart.Legend>
+                <chart:RadialBarSeries x:Name="series1" 
+                                       ItemsSource="{Binding AsianLeastData}"   
+                                       XBindingPath="Country"
+                                       YBindingPath="Access"                                 
+                                       InnerRadius="0.3"
+                                       GapRatio="0.3"
+                                       Radius="1"
+                                       MaximumValue="220"
+                                       EnableTooltip="True"                 
+                                       CapStyle="EndCurve"
+                                       TooltipTemplate="{StaticResource tooltipTemplate}"
+                                       PaletteBrushes="{Binding CustomBrushes1}">
+                    <chart:RadialBarSeries.CenterView>
+                        <VerticalStackLayout>
+                            <Label Text="Asia's" Style="{StaticResource style}" FontSize="{OnPlatform Android=10,iOS='10',Default=20}" x:Name="label1"></Label>
+                            <Label Text="Least" Style="{StaticResource style}" FontSize="{OnPlatform Android='10',iOS='10',Default=20}"/>
+                            <Label Text="powerful" Style="{StaticResource style}" FontSize="{OnPlatform Android='10',iOS='10',Default=20}"/>
+                            <Label Text="passport" Style="{StaticResource style}" FontSize="{OnPlatform Android='10',iOS='10',Default=20}"/>
+                        </VerticalStackLayout>
+                    </chart:RadialBarSeries.CenterView>
+                </chart:RadialBarSeries>
+            </chart:SfCircularChart>
+        </Grid>
+    </Border>
+</ContentPage>
