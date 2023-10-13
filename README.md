@@ -11,7 +11,7 @@ On the flip side, there are passports that provide limited mobility and face ext
 
 Stay tuned as we break down the Passport Power Index for 2023 and provide insights into the global movement landscape. Whether you're a seasoned globetrotter or simply curious about the evolving dynamics of international travel, this RadialBar chart will offer a fascinating glimpse into passport power.
 
-![image](https://github.com/SyncfusionExamples/Creating-a-RadialBar-chart-for-the-Worlds-most-powerful-passports-in-2023/assets/113961867/a02c7542-ccf2-492c-892e-374ef0d86cd1)
+![Radialbar_chart](https://github.com/SyncfusionExamples/Creating-a-RadialBar-chart-for-the-Worlds-most-powerful-passports-in-2023/assets/113961867/a02c7542-ccf2-492c-892e-374ef0d86cd1)
 
 
 
