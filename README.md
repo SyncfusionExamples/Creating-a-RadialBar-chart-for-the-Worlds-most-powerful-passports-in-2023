@@ -1,6 +1,11 @@
 # Creating-a-RadialBar-chart-for-the-most-and-least-powerful-passports-in-2023
 This article explains how to create a RadialBar Chart to visualize the most and least powerful passports in 2023.
 
+## TroubleShooting
+### Path too long exception
+If you are facing an path too long exception when building this example project, close visual studio and rename the repository to short and build the project.
+
+## Description
 This RadialBar chart will shed light on the most and least powerful passports in 2023, offering a visual representation of the global passport hierarchy.
 
 ## Most Powerful Passport - 2023
