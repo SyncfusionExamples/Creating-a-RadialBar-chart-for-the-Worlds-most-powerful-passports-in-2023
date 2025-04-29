@@ -1,45 +1,44 @@
-﻿using Syncfusion.Maui.Charts;
-
-namespace RadialbarSample;
-
-public partial class MainPage : ContentPage
+﻿namespace RadialbarSample
 {
-   // PowerfulPassportViewModel viewModel = new PowerfulPassportViewModel();
-	public MainPage()
-	{
-		InitializeComponent();
-	}
-
-
-    private void Picker_SelectedIndexChanged(object sender, EventArgs e)
+    public partial class MainPage : ContentPage
     {
-        var picker = sender as Picker;
-        string selectedRegion = picker.SelectedIndex switch
+        // PowerfulPassportViewModel viewModel = new PowerfulPassportViewModel();
+        public MainPage()
         {
-            0 => "Asia's",
-            1 => "Europe's",
-            _ => "World's"
-        };
+            InitializeComponent();
+        }
 
-        label.Text = selectedRegion;
-        label1.Text = selectedRegion;
 
-        var mostData = picker.SelectedIndex switch
+        private void Picker_SelectedIndexChanged(object sender, EventArgs e)
         {
-            0 => viewModel.AsianMostData,
-            1 => viewModel.EuropeanMostData,
-            _ => viewModel.WorldMostData
-        };
+            var picker = sender as Picker;
+            string selectedRegion = picker.SelectedIndex switch
+            {
+                0 => "Asia's",
+                1 => "Europe's",
+                _ => "World's"
+            };
 
-        var leastData = picker.SelectedIndex switch
-        {
-            0 => viewModel.AsianLeastData,
-            1 => viewModel.EuropeanLeastData,
-            _ => viewModel.WorldLeastData
-        };
+            label.Text = selectedRegion;
+            label1.Text = selectedRegion;
 
-        series.ItemsSource = mostData;
-        series1.ItemsSource = leastData;
+            var mostData = picker.SelectedIndex switch
+            {
+                0 => viewModel.AsianMostData,
+                1 => viewModel.EuropeanMostData,
+                _ => viewModel.WorldMostData
+            };
+
+            var leastData = picker.SelectedIndex switch
+            {
+                0 => viewModel.AsianLeastData,
+                1 => viewModel.EuropeanLeastData,
+                _ => viewModel.WorldLeastData
+            };
+
+            series.ItemsSource = mostData;
+            series1.ItemsSource = leastData;
+        }
     }
-}
 
+}
